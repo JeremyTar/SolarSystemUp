@@ -6,11 +6,32 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js"
 
 import SolarSysteme from "./Planete.js"
 
-let PlanetSee = {}
+async function getInfo(url) {
+  let json = await fetch(url)
+  return await json.json()
+} 
+
+let callAPI = await getInfo("https://api.le-systeme-solaire.net/rest/bodies?filter[]=isPlanet,eq,true")
+callAPI.bodies.forEach(element => {
+  for (const i in SolarSysteme) {
+    if (element.name == SolarSysteme[i].name) {
+      let caracteristique = {
+        avgTemp: element.avgTemp - 273.15,
+        sideralOrbit: element.sideralOrbit,
+        sideralRotation: element.sideralRotation,
+        diametre: element.meanRadius * 2,
+      }
+      SolarSysteme[i].caracteristique = caracteristique
+    }
+  }
+});
+
+console.log(SolarSysteme)
+
 let index = 3
 let Myloop 
 let initPlanet
-let positionPlanet = {x: 15, y: 5}
+let positionPlanet = {x: 25, y: 5}
 
 function initLoop() {
   initPlanet.rotation.y += 0.001
@@ -43,7 +64,6 @@ function moveCameraLoopAdd() {
 }
 
 function buildPlanete(element) {
-  console.log(element)
   const base = createPlanete(element.maping.base);
   if (element.maping.atmosphere) {
     const atmosphere = createAtmosphere(element.maping.atmosphere);
@@ -150,7 +170,6 @@ function changePlanete(etat) {
   }
   renderer.setAnimationLoop(moveCameraLoopOut)
   setTimeout(() => {
-    console.log("apparition")
         cleanScene()
         window.cancelAnimationFrame(Myloop)
         initPlanet = buildPlanete(SolarSysteme[Object.keys(SolarSysteme)[index]])
@@ -159,6 +178,7 @@ function changePlanete(etat) {
         renderer.setAnimationLoop(moveCameraLoopAdd)
         setTimeout(() => {
           initLoop()
+          buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
         }, 1000)      
   }, 2000)
 }
@@ -172,7 +192,27 @@ function cleanScene() {
   }
 }
 
+function buildText(element) {
+  const title = document.getElementById('titlePlanete')
+  title.innerText = element.name
 
+  const description = document.getElementById('descriptionPlanete')
+  description.innerText = element.description
+
+  const temp = document.getElementById('temparaturePlanete')
+  let tempfull = element.caracteristique.avgTemp
+  let tempcut = tempfull.toString().split("0")
+  temp.innerText = " " + tempcut[0] + " °C"
+
+  const sidRotate = document.getElementById('sideralRotationPlanete')
+  sidRotate.innerText = " " +element.caracteristique.sideralRotation + ' heures'
+
+  const orBRotate = document.getElementById('OrbitaleRotationPlanete')
+  orBRotate.innerText = " " + element.caracteristique.sideralOrbit + " jours"
+
+  const diametre = document.getElementById('diametrePlanete')
+  diametre.innerText = " " + element.caracteristique.diametre + " km"
+}
 
 // inti Scene //
 const size = {
@@ -205,10 +245,10 @@ scene.add(ambientLight, PointLight);
 
 initPlanet = buildPlanete(SolarSysteme[Object.keys(SolarSysteme)[index]])
 
-console.log(initPlanet)
 
 scene.add(initPlanet)
 create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
+buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 initLoop()
 
 let previousButton = document.getElementById("before")

@@ -1,28 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="style.css"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://kit.fontawesome.com/348d9b1434.js" crossorigin="anonymous"></script>
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app">
-      <header>
-        <h1>My solar Syteme</h1>
-      </header>
-      <div id="navButton">
-        <button id="before"><i class="fa-solid fa-arrow-left"></i></button>
-        <button id="after"><i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-      <div class="Panel">
 
-      </div>
-      <canvas id="three"></canvas>
-    </div>
-    <script type="module" src="/main.js"></script>
-  </body>
-  
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="stylesheet" href="output.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/348d9b1434.js" crossorigin="anonymous"></script>
+  <title>Vite App</title>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>My Solar Systeme</h1>      
+    </header>
+    <main> 
+        <section id="main" class="Panel">
+          <div id="section-head" class="flex justify-between items-center text-2xl mb-3">
+            <h2 id="titlePlanete" class="font-bold">EARTH</h2>
+          </div>
+            <p id= descriptionPlanete class="leading-8"></p>
+            <ul id="atmospherePlanete" class="flex">Composition de l'atmosphere :
+              <li class="m">N</li>
+              <li>O2</li>
+              <li>CO2</li>
+            </ul>
+            <div class="flex">
+              <p>Température Moyenne : </p>
+              <p id="temparaturePlanete">d</p>
+            </div>
+            <div class="flex">
+              <p>Diametre de la planete : </p>
+              <p id="diametrePlanete"> d</p>
+            </div>
+            <div class="flex">
+              <p>Période de rotation : </p>
+              <p id="sideralRotationPlanete"> d</p>
+            </div>
+            <div class="flex">
+              <p>Rotation orbitale : </p>
+              <p id="OrbitaleRotationPlanete"> d</p>
+            </div>
+            <div id="navButton">
+              <button id="before"><i class="fa-solid fa-arrow-left"></i>Next</button>
+              <button id="after"><i class="fa-solid fa-arrow-right"></i>Previous</button>
+            </div>   
+          </section>
+          <p id="credits">Design by <a href="#">Ludovic Biolon</a> and mount by <a href="#">Jeremy Tardini</a></p>   
+    </main>
+
+    <canvas id="three"></canvas>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>
