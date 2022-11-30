@@ -36,7 +36,7 @@ const SolarSysteme = {
     atmosphere: "./assets/map/Map_earth_clouds.jpg",
     bump: " ./assets/map/Map_earth_bump.jpg"
   },
-    "a Terre est la troisième planète par ordre d'éloignement au Soleil et la cinquième plus grande du Système solaire aussi bien par la masse que par le diamètre. Par ailleurs, elle est le seul objet céleste connu pour abriter la vie."
+    "La Terre est la troisième planète par ordre d'éloignement au Soleil et la cinquième plus grande du Système solaire aussi bien par la masse que par le diamètre. Par ailleurs, elle est le seul objet céleste connu pour abriter la vie."
     ),
   Mars: new Planete(4, "Mars", {
     base: "./assets/map/Map_mars.jpg"

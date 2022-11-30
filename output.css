@@ -1,3 +1,32 @@
+@font-face {
+  font-family: "calculator";
+
+  src: url("./style/font/Calculator.ttf");
+}
+
+@font-face {
+  font-family: "caviar";
+
+  src: url('.//style/font/CaviarDreams.ttf');
+}
+
+p,span,ul {
+  font-family: "caviar";
+  font-size: 1.2em;
+}
+
+h1,h2,h3 {
+  font-size: 2.5em;
+  font-family: "calculator";
+}
+
+ul {
+  width: 50%;
+  display: flex;
+  list-style: none;
+  justify-content: space-evenly;
+}
+
 canvas {
   position: fixed;
   top: 0;
@@ -29,6 +58,7 @@ canvas {
   color: white;
   top: 10%;
   bottom: 10%;
+  padding-left: 20px;
 }
 
 #credits {
