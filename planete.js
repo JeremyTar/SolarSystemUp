@@ -15,7 +15,7 @@ const SolarSysteme = {
     0,
     "Soleil",
     { base: "./assets/map/Map_sun.jpg" },
-    "Le Soleil est l’étoile du Système solaire. Le Soleil fait partie de la galaxie appelée la Voie lactée et se situe à environ 8 kpc (environ 26 100 a.l.) du centre galactique."
+    "Le Soleil est l’étoile du Système solaire. Le Soleil fait partie de la galaxie appelée la Voie lactée et se situe à environ 8 kpc (environ 26 100 a.l.) du centre galactique.",
   ),
   Mercure: new Planete(
     1,

@@ -18,6 +18,15 @@ async function getInfo(url) {
 let callAPI = await getInfo("https://api.le-systeme-solaire.net/rest/bodies?filter[]=isPlanet,eq,true")
 callAPI.bodies.forEach(element => {
   for (const i in SolarSysteme) {
+    if(SolarSysteme[i].name == "Soleil") {
+      let caracteristique = {
+        avgTemp: 5500,
+        sideralOrbit: "225 Millions d'année", 
+        sideralRotation: "?",
+        diametre: "1,3927 million"
+      }
+      SolarSysteme[i].caracteristique = caracteristique
+    }
     if (element.name == SolarSysteme[i].name) {
       let caracteristique = {
         avgTemp: element.avgTemp - 273.15,
@@ -191,25 +200,42 @@ function cleanScene() {
 }
 
 function buildText(element) {
-  const title = document.getElementById('titlePlanete')
-  title.innerText = element.name
+  if(element.name != "Soleil") {
+    const title = document.getElementById('titlePlanete')
+    title.innerText = element.name
+  
+    const description = document.getElementById('descriptionPlanete')
+    description.innerText = element.description
+  
+    const temp = document.getElementById('temparaturePlanete')
+    let tempfull = element.caracteristique.avgTemp
+    let tempcut = tempfull.toString().split("0")
+    temp.innerText = " " + tempcut[0] + " °C"
+  
+    const sidRotate = document.getElementById('sideralRotationPlanete')
+    sidRotate.innerText = " " + element.caracteristique.sideralRotation + ' heures'
+  
+    const orBRotate = document.getElementById('OrbitaleRotationPlanete')
+    orBRotate.innerText = " " + element.caracteristique.sideralOrbit + " jours"
+  
+    const diametre = document.getElementById('diametrePlanete')
+    diametre.innerText = " " + element.caracteristique.diametre + " km"
+  }
+  else {
+    const title = document.getElementById('titlePlanete')
+    title.innerText = element.name
+    const description = document.getElementById('descriptionPlanete')
+    description.innerText = element.description
+    const temp = document.getElementById('temparaturePlanete')
+    temp.innerText = " " + element.caracteristique.avgTemp + " °C"
+    const sidRotate = document.getElementById('sideralRotationPlanete')
+    sidRotate.innerText = element.caracteristique.sideralRotation
+    const orBRotate = document.getElementById('OrbitaleRotationPlanete')
+    orBRotate.innerText = element.caracteristique.sideralOrbit 
+    const diametre = document.getElementById('diametrePlanete')
+    diametre.innerText = " " + element.caracteristique.diametre + " km"
+  }
 
-  const description = document.getElementById('descriptionPlanete')
-  description.innerText = element.description
-
-  const temp = document.getElementById('temparaturePlanete')
-  let tempfull = element.caracteristique.avgTemp
-  let tempcut = tempfull.toString().split("0")
-  temp.innerText = " " + tempcut[0] + " °C"
-
-  const sidRotate = document.getElementById('sideralRotationPlanete')
-  sidRotate.innerText = " " + element.caracteristique.sideralRotation + ' heures'
-
-  const orBRotate = document.getElementById('OrbitaleRotationPlanete')
-  orBRotate.innerText = " " + element.caracteristique.sideralOrbit + " jours"
-
-  const diametre = document.getElementById('diametrePlanete')
-  diametre.innerText = " " + element.caracteristique.diametre + " km"
 }
 
 // inti Scene //
@@ -254,7 +280,7 @@ console.log(currentPlanete)
 camera.position.z = 100
 camera.position.x = 100
 initLoop()
-
+console.log(SolarSysteme)
 
 let previousButton = document.getElementById("before")
 let afterButton = document.getElementById("after")
