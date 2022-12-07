@@ -9,8 +9,6 @@ import {
 // import { vertexShader } from "./shaders/vertex.glsl"
 
 import SolarSysteme from "./Planete.js"
-import { Group } from "three"
-console.log(SolarSysteme)
 
 async function getInfo(url) {
   let json = await fetch(url)
@@ -48,75 +46,6 @@ function initLoop() {
   Myloop = requestAnimationFrame(initLoop)
 }
 
-
-
-function loopForAnimationMouv() {
-  // if (positionX >= destinationX) {
-  //   camera.position.x -= 1
-  //   positionX -= 1
-  // } else if (positionX <= destinationX) {
-  //   camera.position.x += 1
-  //   positionX += 1
-  // } else if (positionX == destinationX) {
-  // }
-
-  // // if(positionZ >= currentPlanete.position.z) {
-  // //   camera.position.z -= 1
-  // //   positionZ -= positionZ - 1
-  // // } else if (positionZ <= currentPlanete.position.z) {
-  // //   camera.position.z += 1
-  // //   positionZ += 1
-  // // } else if(positionZ == currentPlanete.position.z) { }
-
-  // console.log(positionX)
-  // console.log(destinationX)
-  // camera.lookAt(currentPlanete.position.x, currentPlanete.position.y, currentPlanete.position.z)
-
-  // if (positionZ == destinationZ && positionX == destinationX ) {
-  //   renderer.setAnimationLoop(null)
-  // }
-  // renderer.render(scene, camera)
-  let currentDegres = 0
-  while(currentDegres < ratioDegres) {
-    currentDegres += 0.001
-    groupSolarSysteme.rotation.y += 0.001
-    console.log(currentDegres)
-  }
-  renderer.setAnimationLoop(null)
-}
-
-
-
-
-// function moveCameraLoopOut() {
-//   y += 0.01;
-//   if(y < yFinal) {
-//     camera.rotation.y = y
-//   }
-//   if(y > yFinal) {
-//     renderer.setAnimationLoop(null)
-//   }
-//   renderer.render(scene, camera)
-// }
-
-// function moveCameraLoopAdd() {
-//   y -= 0.01
-//   if(y > yInitial) {
-//     camera.rotation.y = y
-//   }
-//   if(y < yInitial) {
-//     camera.rotation.y = 0
-//     renderer.setAnimationLoop(null)
-//   }
-//   renderer.render(scene, camera)
-// }
-
-
-function roundPosition(position) {
-  return Number.parseFloat(position).toFixed(2)
-
-}
-
 function buildPlanete(element) {
   const base = createPlanete(element.maping.base);
   if (element.maping.atmosphere) {
@@ -133,8 +62,6 @@ function buildPlanete(element) {
     ring.rotation.x += element.maping.ring.position.x
     base.add(ring)
   }
-  // base.position.x = positionPlanet.x
-  // base.position.y = positionPlanet.y
   return base
 }
 
@@ -174,7 +101,7 @@ function createPlanete(element) {
 
 function createAtmosphere(element) {
   return new THREE.Mesh(
-    new THREE.SphereGeometry(0.51, 32, 16),
+    new THREE.SphereGeometry(10.1, 32, 16),
     new THREE.MeshPhongMaterial({
       map: new THREE.TextureLoader().load(element),
       transparent: true,
@@ -189,7 +116,7 @@ function createBump(element) {
 
 function createRing(element) {
   const texture = new THREE.TextureLoader().load(element)
-  const ringGeometry = new THREE.RingGeometry(0.5, 0.6, 64);
+  const ringGeometry = new THREE.RingGeometry(11, 12, 64);
   const material = new THREE.MeshPhongMaterial({
     map: texture,
     transparent: false,
@@ -216,9 +143,6 @@ function create3DText(element) {
       flatShading: true,
       map: new THREE.TextureLoader().load(element.maping.base)
     }))
-    textMesh.position.y = positionPlanet.y + 15
-    textMesh.position.x -= center.x
-    textMesh.position.x += positionPlanet.x
     scene.add(textMesh)
 
   }, (xhr) => {
@@ -234,38 +158,27 @@ function changePlanete(etat) {
   if (etat === "before") {
     if (index == 0) {
       index = 8
+      groupSolarSysteme.rotation.y = ratioDegres * 8
     } else {
       index--
+      groupSolarSysteme.rotation.y -= ratioDegres
     }
   } else if (etat === "after") {
     if (index == 8) {
       index = 0
+      groupSolarSysteme.rotation.y = -(3 * ratioDegres)
     } else {
       index++
+      groupSolarSysteme.rotation.y += ratioDegres
     }
   } else {
     console.log("bad entrie for index status")
     return
   }
-  // oldPlanete = currentPlanete
+  console.log(groupSolarSysteme.rotation.y)
+  console.log(ratioDegres)
   currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
-  // destinationX = Math.round(SolarSysteme[Object.keys(SolarSysteme)[index]].mesh.position.x)
-  // destinationZ = Math.round(SolarSysteme[Object.keys(SolarSysteme)[index]].mesh.position.z)
-  renderer.setAnimationLoop(loopForAnimationMouv)
-
-  // renderer.setAnimationLoop(moveCameraLoopOut)
-  // setTimeout(() => {
-  //       cleanScene()
-  //       window.cancelAnimationFrame(Myloop)
-  //       initPlanet = buildPlanete(SolarSysteme[Object.keys(SolarSysteme)[index]])
-  //       scene.add(initPlanet)
-  //       create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
-  //       renderer.setAnimationLoop(moveCameraLoopAdd)
-  //       setTimeout(() => {
-  //         initLoop()
-  //         buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
-  //       }, 1000)      
-  // }, 2000)
+  buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 }
 
 function cleanScene() {
@@ -314,13 +227,7 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
-// camera.position.x = 8
-// camera.position.y = 0
-// camera.position.z = 0
 
-
-// const yFinal = 1
-// const yInitial = 0
 let y = camera.rotation.x
 let positionX = Math.round(camera.position.x)
 let positionZ = Math.round(camera.position.z)
@@ -330,7 +237,7 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 const ambientLight = new THREE.AmbientLight(0x404040, 1, 1000);
-const PointLight = new THREE.PointLight(0xffffff, 2, 250)
+const PointLight = new THREE.PointLight(0xffffff, 2, 300)
 PointLight.position.set(0, 10, 0)
 scene.add(ambientLight, PointLight);
 
