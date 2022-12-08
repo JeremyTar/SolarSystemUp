@@ -21,7 +21,7 @@ callAPI.bodies.forEach(element => {
     if(SolarSysteme[i].name == "Soleil") {
       let caracteristique = {
         "Température moyenne": 5500,
-        "Rotation Orbital": "225 Millions d'année", 
+        "Rotation Orbitale": "225 Millions d'année", 
         "Période de rotation": "?",
         "Diamètre": "1,3927 million"
       }
@@ -30,7 +30,7 @@ callAPI.bodies.forEach(element => {
     if (element.name == SolarSysteme[i].name) {
       let caracteristique = {
         "Température moyenne": element.avgTemp - 273.15,
-        "Rotation Orbital": element.sideralOrbit,
+        "Rotation Orbitale": element.sideralOrbit,
         "Période de rotation": element.sideralRotation,
         "Diamètre": element.meanRadius * 2,
       }
@@ -167,7 +167,7 @@ function changePlanete(etat) {
   if (etat === "before") {
     if (index == 0) {
       index = 8
-      groupSolarSysteme.rotation.y = ratioDegres * 8
+      groupSolarSysteme.rotation.y = 200
     } else {
       index--
       groupSolarSysteme.rotation.y -= ratioDegres
@@ -200,15 +200,17 @@ function cleanScene() {
 }
 
 function buildText(element) {
+
   //Build description
+
   const title = document.getElementById('titlePlanete')
   title.innerText = element.name
 
   const description = document.getElementById('descriptionPlanete')
   description.innerText = element.description
 
-  
   // Build table atmosphere
+
   let table = document.getElementById("tableAtmos")
   let child = table.lastElementChild; 
   while (child) {
@@ -243,7 +245,36 @@ function buildText(element) {
       const thPlanet = document.createElement("th")
       thPlanet.innerText = i
       const tdPlanet = document.createElement("td")
-      tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
+      // tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
+      switch (i) {
+        case "Température moyenne" :
+          if(SolarSysteme[Object.keys(SolarSysteme)[index]].name == "Soleil") {
+            tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i] + " °C"
+          } else {
+            let temp = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
+            let tempSplit = temp.toString().split(".")
+            let decimal = tempSplit[1].split("")
+            let finalTemp = tempSplit[0] + "." + decimal[0] + decimal[1]
+            tdPlanet.innerText = finalTemp + "°C"
+          }
+          break
+        case "Rotation Orbitale" :
+          if(SolarSysteme[Object.keys(SolarSysteme)[index]].name == "Soleil") {
+            tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
+          } else {
+            tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i] + " Jours"
+          }
+          break
+        case "Période de rotation" :
+          tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i] + " Heures"
+          break
+        case "Diamètre" :
+          if(SolarSysteme[Object.keys(SolarSysteme)[index]].name == "Soleil") {
+            tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i] + " de Km"
+          } else {
+            tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i] + " Km"
+          }
+      }
       trPlanet.appendChild(thPlanet)
       trPlanet.appendChild(tdPlanet)
       tablePlanet.appendChild(trPlanet)

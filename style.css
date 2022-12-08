@@ -69,9 +69,16 @@ canvas {
 
 table, td ,tr ,th{
   font-family: "caviar";
+  border: 1px solid;
+  padding: 5px;
 }
 
 .informationsPlanete {
   display: flex;
   justify-content: space-around;
+}
+.PeriodiqueELement:hover {
+  background-image: url("../assets/Periodique.png");
+  position: absolute;
+  z-index: 11;
 }
