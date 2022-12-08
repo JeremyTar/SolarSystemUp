@@ -13,7 +13,10 @@
 <body>
   <div id="app">
     <header>
-      <h1>My Solar Systeme</h1>      
+      <h1>My Solar Systeme</h1>
+      <div clas="tools">
+        <button id="openPeriodique">Tableau</button>
+      </div>      
     </header>
     <main> 
         <section id="main" class="Panel">
@@ -24,23 +27,18 @@
             <div class="informationsPlanete">
               <div>
                 <table>
-                  <thead>
-                      <tr>Composition atmosphérique</tr>
-                  </thead>
+                  <caption>Composition atmosphérique</caption>
                   <tbody id="tableAtmos">
                   </tbody>
                 </table>
               </div>
               <div>
                 <table>
-                    <thead>
-                        <tr>Caractéristique de la planete</tr>
-                    </thead>
+                    <caption>Caractéristique de la planete</caption>
                     <tbody id="tablePlanet">
                     </tbody>
                 </table>
               </div>
-              <button id="openPeriodique">Element</button>
             </div>
             <div id="navButton">
               <button id="before"><i class="fa-solid fa-arrow-left"></i>Next</button>
@@ -51,8 +49,10 @@
     </main>
     <canvas id="three"></canvas>
     <div id="periodique">
-      <img src="./assets/Periodique.png" alt="tableau périodique des Elements">
-      <button id="closePeriodique">X</button>
+      <div class="containt">
+        <img src="./assets/Periodique.png" alt="tableau périodique des Elements">
+        <button id="closePeriodique">X</button>        
+      </div>
     </div>
   </div>
   <script type="module" src="/main.js"></script>

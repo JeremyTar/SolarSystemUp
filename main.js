@@ -21,7 +21,7 @@ callAPI.bodies.forEach(element => {
     if(SolarSysteme[i].name == "Soleil") {
       let caracteristique = {
         "Température moyenne": 5500,
-        "Rotation Orbitale": "225 Millions d'année", 
+        "Rotation Orbitale": "225 Millions d'années", 
         "Période de rotation": "?",
         "Diamètre": "1,3927 million"
       }
