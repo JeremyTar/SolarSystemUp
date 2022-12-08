@@ -20,19 +20,19 @@ callAPI.bodies.forEach(element => {
   for (const i in SolarSysteme) {
     if(SolarSysteme[i].name == "Soleil") {
       let caracteristique = {
-        avgTemp: 5500,
-        sideralOrbit: "225 Millions d'année", 
-        sideralRotation: "?",
-        diametre: "1,3927 million"
+        "Température moyenne": 5500,
+        "Rotation Orbital": "225 Millions d'année", 
+        "Période de rotation": "?",
+        "Diamètre": "1,3927 million"
       }
       SolarSysteme[i].caracteristique = caracteristique
     }
     if (element.name == SolarSysteme[i].name) {
       let caracteristique = {
-        avgTemp: element.avgTemp - 273.15,
-        sideralOrbit: element.sideralOrbit,
-        sideralRotation: element.sideralRotation,
-        diametre: element.meanRadius * 2,
+        "Température moyenne": element.avgTemp - 273.15,
+        "Rotation Orbital": element.sideralOrbit,
+        "Période de rotation": element.sideralRotation,
+        "Diamètre": element.meanRadius * 2,
       }
       SolarSysteme[i].caracteristique = caracteristique
     }
@@ -200,42 +200,54 @@ function cleanScene() {
 }
 
 function buildText(element) {
-  if(element.name != "Soleil") {
-    const title = document.getElementById('titlePlanete')
-    title.innerText = element.name
+  //Build description
+  const title = document.getElementById('titlePlanete')
+  title.innerText = element.name
+
+  const description = document.getElementById('descriptionPlanete')
+  description.innerText = element.description
+
   
-    const description = document.getElementById('descriptionPlanete')
-    description.innerText = element.description
-  
-    const temp = document.getElementById('temparaturePlanete')
-    let tempfull = element.caracteristique.avgTemp
-    let tempcut = tempfull.toString().split("0")
-    temp.innerText = " " + tempcut[0] + " °C"
-  
-    const sidRotate = document.getElementById('sideralRotationPlanete')
-    sidRotate.innerText = " " + element.caracteristique.sideralRotation + ' heures'
-  
-    const orBRotate = document.getElementById('OrbitaleRotationPlanete')
-    orBRotate.innerText = " " + element.caracteristique.sideralOrbit + " jours"
-  
-    const diametre = document.getElementById('diametrePlanete')
-    diametre.innerText = " " + element.caracteristique.diametre + " km"
+  // Build table atmosphere
+  let table = document.getElementById("tableAtmos")
+  let child = table.lastElementChild; 
+  while (child) {
+      table.removeChild(child);
+      child = table.lastElementChild;
   }
-  else {
-    const title = document.getElementById('titlePlanete')
-    title.innerText = element.name
-    const description = document.getElementById('descriptionPlanete')
-    description.innerText = element.description
-    const temp = document.getElementById('temparaturePlanete')
-    temp.innerText = " " + element.caracteristique.avgTemp + " °C"
-    const sidRotate = document.getElementById('sideralRotationPlanete')
-    sidRotate.innerText = element.caracteristique.sideralRotation
-    const orBRotate = document.getElementById('OrbitaleRotationPlanete')
-    orBRotate.innerText = element.caracteristique.sideralOrbit 
-    const diametre = document.getElementById('diametrePlanete')
-    diametre.innerText = " " + element.caracteristique.diametre + " km"
+  for(const i in SolarSysteme[Object.keys(SolarSysteme)[index]].atmosphereCompo) {
+    const tr = document.createElement("tr")
+    const th = document.createElement("th")
+    th.innerText = i
+    const td = document.createElement("td")
+    if(SolarSysteme[Object.keys(SolarSysteme)[index]].atmosphereCompo[i] == "Traces") {
+      td.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].atmosphereCompo[i]
+    } else {
+      td.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].atmosphereCompo[i] + " %"
+    }
+    tr.appendChild(th)
+    tr.appendChild(td)
+    table.appendChild(tr)
   }
 
+  // Build table Caratéristique
+
+  let tablePlanet = document.getElementById("tablePlanet")
+  let childPlanet = tablePlanet.lastElementChild; 
+  while (childPlanet) {
+      tablePlanet.removeChild(childPlanet);
+      childPlanet = tablePlanet.lastElementChild;
+  }
+  for(const i in SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique) {
+      const trPlanet = document.createElement("tr")
+      const thPlanet = document.createElement("th")
+      thPlanet.innerText = i
+      const tdPlanet = document.createElement("td")
+      tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
+      trPlanet.appendChild(thPlanet)
+      trPlanet.appendChild(tdPlanet)
+      tablePlanet.appendChild(trPlanet)
+  }
 }
 
 // inti Scene //

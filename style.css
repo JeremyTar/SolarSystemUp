@@ -66,3 +66,12 @@ canvas {
   right: 5px;
   color: white;
 }
+
+table, td ,tr ,th{
+  font-family: "caviar";
+}
+
+.informationsPlanete {
+  display: flex;
+  justify-content: space-around;
+}
