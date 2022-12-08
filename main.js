@@ -37,16 +37,18 @@ callAPI.bodies.forEach(element => {
       SolarSysteme[i].caracteristique = caracteristique
     }
   }
-});
+})
+
+// THREE PART
+/* Emit variable
+*  Emit Function
+*  Emit scene
+*/
 
 let index = 3
 let Myloop
 let currentPlanete
 let ratioDegres
-
-
-
-// let positionPlanet = {x: 0, y:0}
 
 function initLoop() {
   currentPlanete.rotation.y += 0.001
@@ -135,33 +137,33 @@ function createRing(element) {
   return new THREE.Mesh(ringGeometry, material)
 }
 
-function create3DText(element) {
-  const loader = new FontLoader()
-  const text = element.name
-  loader.load("./style/font/Space Age_Regular.json", (font) => {
-    const textGeometry = new TextGeometry(text, {
-      font: font,
-      size: 3,
-      height: 2,
-      curveSegments: 3,
-      bevelEnabled: false,
-    })
-    textGeometry.computeBoundingBox()
-    const center = textGeometry.boundingBox.getCenter(new THREE.Vector3());
-    const textMesh = new THREE.Mesh(textGeometry, new THREE.MeshPhongMaterial({
-      flatShading: true,
-      map: new THREE.TextureLoader().load(element.maping.base)
-    }))
-    scene.add(textMesh)
+// function create3DText(element) {
+//   const loader = new FontLoader()
+//   const text = element.name
+//   loader.load("./style/font/Space Age_Regular.json", (font) => {
+//     const textGeometry = new TextGeometry(text, {
+//       font: font,
+//       size: 3,
+//       height: 2,
+//       curveSegments: 3,
+//       bevelEnabled: false,
+//     })
+//     textGeometry.computeBoundingBox()
+//     const center = textGeometry.boundingBox.getCenter(new THREE.Vector3());
+//     const textMesh = new THREE.Mesh(textGeometry, new THREE.MeshPhongMaterial({
+//       flatShading: true,
+//       map: new THREE.TextureLoader().load(element.maping.base)
+//     }))
+//     scene.add(textMesh)
 
-  }, (xhr) => {
-    console.log((xhr.loaded / xhr.total * 100) + '% loaded')
-  }, (err) => {
-    console.log(err)
-    return
-  })
+//   }, (xhr) => {
+//     console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+//   }, (err) => {
+//     console.log(err)
+//     return
+//   })
 
-}
+// }
 
 function changePlanete(etat) {
   if (etat === "before") {
@@ -190,14 +192,14 @@ function changePlanete(etat) {
   buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 }
 
-function cleanScene() {
-  for (let i = scene.children.length - 1; i > 1; i--) {
-    const object = scene.children[i]
-    object.geometry.dispose();
-    object.material.dispose();
-    scene.remove(object);
-  }
-}
+// function cleanScene() {
+//   for (let i = scene.children.length - 1; i > 1; i--) {
+//     const object = scene.children[i]
+//     object.geometry.dispose();
+//     object.material.dispose();
+//     scene.remove(object);
+//   }
+// }
 
 function buildText(element) {
 
@@ -323,10 +325,17 @@ console.log(currentPlanete)
 camera.position.z = 100
 camera.position.x = 100
 initLoop()
-console.log(SolarSysteme)
+
+// BUTTON PART
+/* Emit variable
+*  Make eventListener
+*/
 
 let previousButton = document.getElementById("before")
 let afterButton = document.getElementById("after")
+let elementButtonOpen = document.getElementById("openPeriodique")
+let elementButtonClose = document.getElementById("closePeriodique")
+let tableau = document.getElementById("periodique")
 
 previousButton.addEventListener("click", () => {
   changePlanete("before")
@@ -334,10 +343,25 @@ previousButton.addEventListener("click", () => {
 afterButton.addEventListener("click", () => {
   changePlanete("after")
 })
+elementButtonOpen.addEventListener('click', () => {
+  if(tableau.style.display == 'block') {
+    return
+  }
+  tableau.style.display = 'block'
+})
+elementButtonClose.addEventListener('click', () => {
+  if(tableau.style.display == 'none') {
+    return
+  }
+  tableau.style.display = 'none'
+})
+
+
+// RESPONSIVE THREE
 
 window.addEventListener('resize', () => {
-  var width = window.innerWidth;
-  var height = window.innerHeight;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
   renderer.setSize(width, height);
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
