@@ -6,9 +6,12 @@ import {
   TextGeometry
 } from "three/examples/jsm/geometries/TextGeometry.js"
 
-// import { vertexShader } from "./shaders/vertex.glsl"
+import vertexShader from "./shaders/vertex.glsl";
+// import { fragmentShader } from "./shaders/fragment.glsl";
 
 import SolarSysteme from "./Planete.js"
+
+console.log(vertexShader)
 
 async function getInfo(url) {
   let json = await fetch(url)
@@ -298,10 +301,6 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
-
-let y = camera.rotation.x
-let positionX = Math.round(camera.position.x)
-let positionZ = Math.round(camera.position.z)
 const renderer = new THREE.WebGLRenderer({
   canvas: document.getElementById("three"),
   antialias: true,
@@ -321,7 +320,6 @@ BuildPositionPlanete(SolarSysteme)
 scene.add(groupSolarSysteme)
 buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
-console.log(currentPlanete)
 camera.position.z = 100
 camera.position.x = 100
 initLoop()
