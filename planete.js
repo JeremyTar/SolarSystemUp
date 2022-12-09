@@ -1,22 +1,29 @@
-import soleilVertexP from "./shaders/Soleil/vertex.glsl"
-import soleilFragmentP from "./shaders/Soleil/fragment.glsl"
-import soleilVertexA from "./shaders/Soleil/atmosphereVertex.glsl"
-import soleilFragmentA from "./shaders/Soleil/atmosphereFragment.glsl"
+import SoleilVertexA from "./shaders/Soleil/atmosphereVertex.glsl"
+import SoleilFragmentA from "./shaders/Soleil/atmosphereFragment.glsl"
 
-import mercureVertexP from "./shaders/Mercure/vertex.glsl"
-import mercureFragmentP from "./shaders/Mercure/fragment.glsl"
-import mercureVertexA from "./shaders/Mercure/atmosphereVertex.glsl"
-import mercureFragmentA from "./shaders/Mercure/atmosphereFragment.glsl"
+import MercureVertexA from "./shaders/Mercure/atmosphereVertex.glsl"
+import MercureFragmentA from "./shaders/Mercure/atmosphereFragment.glsl"
 
-import venusVertexP from "./shaders/Vénus/vertex.glsl"
-import venusFragmentP from "./shaders/Vénus/fragment.glsl"
-import venusVertexA from "./shaders/Vénus/atmosphereVertex.glsl"
-import venusFragmentA from "./shaders/Vénus/atmosphereFragment.glsl"
+import VenusVertexA from "./shaders/Vénus/atmosphereVertex.glsl"
+import VenusFragmentA from "./shaders/Vénus/atmosphereFragment.glsl"
 
-import EarthVertexP from "./shaders/Terre/vertex.glsl"
-import EarthFragmentP from "./shaders/Terre/fragment.glsl"
 import EarthVertexA from "./shaders/Terre/atmosphereVertex.glsl"
 import EarthFragmentA from "./shaders/Terre/atmosphereFragment.glsl"
+
+import MarsVertexA from "./shaders/Mars/atmosphereVertex.glsl"
+import MarsFragmentA from "./shaders/Mars/atmosphereFragment.glsl"
+
+import JupiterVertexA from "./shaders/Jupiter/atmosphereVertex.glsl"
+import JupiterFragmentA from "./shaders/Jupiter/atmosphereFragment.glsl"
+
+import SaturneVertexA from "./shaders/Saturne/atmosphereVertex.glsl"
+import SaturneFragmentA from "./shaders/Saturne/atmosphereFragment.glsl"
+
+import UranusVertexA from "./shaders/Uranus/atmosphereVertex.glsl"
+import UranusFragmentA from "./shaders/Uranus/atmosphereFragment.glsl"
+
+import NeptuneVertexA from "./shaders/Neptune/atmosphereVertex.glsl"
+import NeptuneFragmentA from "./shaders/Neptune/atmosphereFragment.glsl"
 
 class Planete {
   id;
@@ -37,11 +44,9 @@ const SolarSysteme = {
     "Soleil", {
       base: "./assets/map/Map_sun.jpg",
       shaders: {
-        atmosSize: 11,
-        vertexPlanete: soleilVertexP,
-        fragmentPlanete: soleilFragmentP,
-        vertexAtmos: soleilVertexA,
-        fragmentAtmos: soleilFragmentA,
+        atmosSize: 13,
+        vertexAtmos: SoleilVertexA,
+        fragmentAtmos: SoleilFragmentA,
       }
     },
     "Le Soleil est l’étoile du Système solaire. Le Soleil fait partie de la galaxie appelée la Voie lactée et se situe à environ 8 kpc (environ 26 100 a.l.) du centre galactique.",
@@ -53,10 +58,8 @@ const SolarSysteme = {
       base: "./assets/map/Map_mercure.jpg",
       shaders: {
         atmosSize: 11,
-        vertexPlanete : mercureVertexP,
-        fragmentPlanete : mercureFragmentP,
-        vertexAtmos: mercureVertexA,
-        fragmentAtmos: mercureFragmentA,
+        vertexAtmos: MercureVertexA,
+        fragmentAtmos: MercureFragmentA,
       }
     },
     "Mercure est la planète la plus proche du Soleil et la moins massive du Système solaire.",
@@ -69,10 +72,8 @@ const SolarSysteme = {
       atmosphere: "./assets/map/Map_venus_atmosphere.jpg",
       shaders: {
         atmosSize: 11,
-        vertexPlanete : venusVertexP,
-        fragmentPlanete : venusFragmentP,
-        vertexAtmos: venusVertexA,
-        fragmentAtmos: venusFragmentA,
+        vertexAtmos: VenusVertexA,
+        fragmentAtmos: VenusFragmentA,
       }
     },
     "Vénus est la deuxième planète du Système solaire par ordre d'éloignement au Soleil, et la sixième plus grosse aussi bien par la masse que le diamètre.",
@@ -83,9 +84,7 @@ const SolarSysteme = {
       atmosphere: "./assets/map/Map_earth_clouds.jpg",
       bump: " ./assets/map/Map_earth_bump.jpg",
       shaders: {
-        atmosSize: 11,
-        vertexPlanete : EarthVertexP,
-        fragmentPlanete : EarthFragmentP,
+        atmosSize: 12,
         vertexAtmos: EarthVertexA,
         fragmentAtmos: EarthFragmentA,
       }
@@ -96,11 +95,9 @@ const SolarSysteme = {
   Mars: new Planete(4, "Mars", {
       base: "./assets/map/Map_mars.jpg",
       shaders: {
-        atmosSize: 11,
-        vertexPlanete : require("./shaders/Mars/vertex.glsl"),
-        fragmentPlanete : require("./shaders/Mars/fragment.glsl"),
-        vertexAtmos: require("./shaders/Mars/atmosphereVertex.glsl"),
-        fragmentAtmos: require("./shaders/Mars/atmosphereFragment.glsl"),
+        atmosSize: 12,
+        vertexAtmos: MarsVertexA,
+        fragmentAtmos: MarsFragmentA,
       }
     },
     "Mars (prononcé en français : /maʁs/) est la quatrième planète du Système solaire par ordre croissant de la distance au Soleil et la deuxième par ordre croissant de la taille et de la masse.",
@@ -110,10 +107,8 @@ const SolarSysteme = {
       base: "./assets/map/Map_jupiter.jpg",
       shaders: {
         atmosSize: 11,
-        vertexPlanete : require("./shaders/Jupiter/vertex.glsl"),
-        fragmentPlanete : require("./shaders/Jupiter/fragment.glsl"),
-        vertexAtmos: require("./shaders/Jupiter/atmosphereVertex.glsl"),
-        fragmentAtmos: require("./shaders/Jupiter/atmosphereFragment.glsl"),
+        vertexAtmos: JupiterVertexA,
+        fragmentAtmos: JupiterFragmentA,
       }
     },
     "Jupiter est la cinquième planète du Système solaire par ordre d'éloignement au Soleil, et la plus grande par la taille et la masse devant Saturne, qui est comme elle une planète géante gazeuse.",
@@ -129,11 +124,9 @@ const SolarSysteme = {
         }
       },
       shaders: {
-        atmosSize: 11,
-        vertexPlanete : require("./shaders/Saturne/vertex.glsl"),
-        fragmentPlanete : require("./shaders/Saturne/fragment.glsl"),
-        vertexAtmos: require("./shaders/Saturne/atmosphereVertex.glsl"),
-        fragmentAtmos: require("./shaders/Saturne/atmosphereFragment.glsl"),
+        atmosSize: 10,
+        vertexAtmos: SaturneVertexA,
+        fragmentAtmos: SaturneFragmentA,
       }
     },
     "Saturne est la sixième planète du Système solaire par ordre d'éloignement au Soleil, et la deuxième plus grande par la taille et la masse après Jupiter, qui est comme elle une planète géante gazeuse.",
@@ -149,11 +142,9 @@ const SolarSysteme = {
         }
       },
       shaders: {
-        atmosSize: 11,
-        vertexPlanete : require("./shaders/Uranus/vertex.glsl"),
-        fragmentPlanete : require("./shaders/Uranus/fragment.glsl"),
-        vertexAtmos: require("./shaders/Uranus/atmosphereVertex.glsl"),
-        fragmentAtmos: require("./shaders/Uranus/atmosphereFragment.glsl"),
+        atmosSize: 10,
+        vertexAtmos: UranusVertexA,
+        fragmentAtmos: UranusFragmentA,
       }
     },
     "Uranus est la septième planète du Système solaire par ordre d'éloignement du Soleil.",
@@ -163,10 +154,8 @@ const SolarSysteme = {
     base: "./assets/map/Map_neptune.jpg",
     shaders: {
       atmosSize: 11,
-      vertexPlanete : require("./shaders/Neptune/vertex.glsl"),
-      fragmentPlanete : require("./shaders/Neptune/fragment.glsl"),
-      vertexAtmos: require("./shaders/Neptune/atmosphereVertex.glsl"),
-      fragmentAtmos: require("./shaders/Neptune/atmosphereFragment.glsl"),
+      vertexAtmos: NeptuneVertexA,
+      fragmentAtmos: NeptuneFragmentA,
     }
   }, 
   "Neptune est la huitième planète par ordre d'éloignement au Soleil et la plus éloignée connue du Système solaire",

@@ -1,5 +1,6 @@
 import * as THREE from "three"
-
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 // IMPORT SHADERS
 
 import SolarSysteme from "./Planete.js"
@@ -43,8 +44,9 @@ callAPI.bodies.forEach(element => {
 
 let index = 3
 let Myloop
+let oldPlanete
 let currentPlanete
-let ratioDegres
+let myText
 
 function initLoop() {
   currentPlanete.rotation.y += 0.001
@@ -55,6 +57,8 @@ function initLoop() {
 
 function buildPlanete(element) {
   const base = createPlanete(element);
+  const shadersAtmos = createShadersAtmosphere(element.maping.shaders)
+  base.add(shadersAtmos)
   if (element.maping.atmosphere) {
     const atmosphere = createAtmosphere(element.maping.atmosphere);
     base.add(atmosphere)
@@ -73,53 +77,49 @@ function buildPlanete(element) {
   return base
 }
 
-function BuildPositionPlanete(allplanete) {
-  let nbrOfElement = 0
-  for (const i in allplanete) {
-    nbrOfElement++
-  }
-  const degrees = 360 / nbrOfElement
-  ratioDegres = degrees
-  let currentDegrees = 0
-  for (const i in allplanete) {
-    allplanete[i].mesh.position.x = Math.cos(currentDegrees) * 200
-    allplanete[i].mesh.position.z = Math.sin(currentDegrees) * 200
-    if(allplanete[i].name == "La Terre") {
-      let positionLookAt = new THREE.Vector3(
-        Math.cos(currentDegrees) + 15,
-        0,
-        Math.sin(currentDegrees) -2        
-      )
-      camera.lookAt(positionLookAt)
-    }
-    currentDegrees += degrees
-  }
-  return
-}
+// function BuildPositionPlanete(allplanete) {
+//   let nbrOfElement = 0
+//   for (const i in allplanete) {
+//     nbrOfElement++
+//   }
+//   const degrees = 360 / nbrOfElement
+//   ratioDegres = degrees
+//   let currentDegrees = 0
+//   for (const i in allplanete) {
+//     allplanete[i].mesh.position.x = Math.cos(currentDegrees) * 200
+//     allplanete[i].mesh.position.z = Math.sin(currentDegrees) * 200
+//     if(allplanete[i].name == "La Terre") {
+//       let positionLookAt = new THREE.Vector3(
+//         Math.cos(currentDegrees) + 15,
+//         0,
+//         Math.sin(currentDegrees) -2        
+//       )
+//       camera.lookAt(positionLookAt)
+//     }
+//     currentDegrees += degrees
+//   }
+//   return
+// }
 
 function createPlanete(element) {
   return new THREE.Mesh(
     new THREE.SphereGeometry(10, 64, 32),
-    new THREE.ShaderMaterial({
-      vertexShader: element.maping.shaders.vertexPlanete,
-      fragmentShader: element.maping.shaders.fragmentPlanete,
-      uniforms: {
-        globeTexture: {
-          value: new THREE.TextureLoader().load(element.maping.base)
-        }
-      } 
+    new THREE.MeshPhongMaterial({
+      map: new THREE.TextureLoader().load(element.maping.base),
     })
   );
 }
 
-function createShadersAtmosphere() {
+function createShadersAtmosphere(element) {
   return new THREE.Mesh(
-    new THREE.SphereGeometry(10, 64, 32),
-    new THREE.MeshPhongMaterial({
-      map: new THREE.TextureLoader().load(element),
-      side: THREE.DoubleSide,
+    new THREE.SphereGeometry(element.atmosSize,64,32),
+    new THREE.ShaderMaterial({
+      vertexShader : element.vertexAtmos,
+      fragmentShader: element.fragmentAtmos,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide
     })
-  );
+  )
 }
 
 function createAtmosphere(element) {
@@ -143,76 +143,71 @@ function createRing(element, size) {
   const ringGeometry = new THREE.RingGeometry(size.begin, size.end, 64);
   const material = new THREE.MeshPhongMaterial({
     map: texture,
-    transparent: false,
+    transparent: true,
     side: THREE.DoubleSide,
     opacity: 1
   })
   return new THREE.Mesh(ringGeometry, material)
 }
 
-// function create3DText(element) {
-//   const loader = new FontLoader()
-//   const text = element.name
-//   loader.load("./style/font/Space Age_Regular.json", (font) => {
-//     const textGeometry = new TextGeometry(text, {
-//       font: font,
-//       size: 3,
-//       height: 2,
-//       curveSegments: 3,
-//       bevelEnabled: false,
-//     })
-//     textGeometry.computeBoundingBox()
-//     const center = textGeometry.boundingBox.getCenter(new THREE.Vector3());
-//     const textMesh = new THREE.Mesh(textGeometry, new THREE.MeshPhongMaterial({
-//       flatShading: true,
-//       map: new THREE.TextureLoader().load(element.maping.base)
-//     }))
-//     scene.add(textMesh)
+function create3DText(element) {
+  const loader = new FontLoader()
+  const text = element.name
+  loader.load("./style/font/Space Age_Regular.json", (font) => {
+    const textGeometry = new TextGeometry(text, {
+      font: font,
+      size: 3,
+      height: 2,
+      curveSegments: 3,
+      bevelEnabled: false,
+    })
+    textGeometry.computeBoundingBox()
+    const center = textGeometry.boundingBox.getCenter(new THREE.Vector3());
+    const textMesh = new THREE.Mesh(textGeometry, new THREE.MeshPhongMaterial({
+      flatShading: true,
+      map: new THREE.TextureLoader().load(element.maping.base)
+    }))
+    console.log(center)
+    textMesh.position.x -= center.x
+    textMesh.position.y += 15
+    myText = textMesh
+    scene.add(textMesh)
 
-//   }, (xhr) => {
-//     console.log((xhr.loaded / xhr.total * 100) + '% loaded')
-//   }, (err) => {
-//     console.log(err)
-//     return
-//   })
+  }, (xhr) => {
+    console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+  }, (err) => {
+    console.log(err)
+    return
+  })
 
-// }
+}
 
 function changePlanete(etat) {
   if (etat === "before") {
     if (index == 0) {
       index = 8
-      groupSolarSysteme.rotation.y = 200
     } else {
       index--
-      groupSolarSysteme.rotation.y -= ratioDegres
     }
   } else if (etat === "after") {
     if (index == 8) {
       index = 0
-      groupSolarSysteme.rotation.y = -(3 * ratioDegres)
     } else {
       index++
-      groupSolarSysteme.rotation.y += ratioDegres
     }
   } else {
     console.log("bad entrie for index status")
     return
   }
-  console.log(groupSolarSysteme.rotation.y)
-  console.log(ratioDegres)
+  oldPlanete = currentPlanete
   currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
   buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
+  scene.remove(oldPlanete)
+  console.log(scene)
+  scene.add(currentPlanete)
+  scene.remove(myText)
+  create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 }
-
-// function cleanScene() {
-//   for (let i = scene.children.length - 1; i > 1; i--) {
-//     const object = scene.children[i]
-//     object.geometry.dispose();
-//     object.material.dispose();
-//     scene.remove(object);
-//   }
-// }
 
 function buildText(element) {
 
@@ -315,8 +310,8 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true,
 });
 
-const ambientLight = new THREE.AmbientLight(0x404040, 1, 1000);
-const PointLight = new THREE.PointLight(0xffffff, 2, 300)
+const ambientLight = new THREE.AmbientLight(0x404040, 3.5, 1000);
+const PointLight = new THREE.PointLight(0xffffff, 1, 300)
 PointLight.position.set(0, 10, 0)
 scene.add(ambientLight, PointLight);
 
@@ -325,27 +320,17 @@ for (const i in SolarSysteme) {
   SolarSysteme[i].mesh = buildPlanete(SolarSysteme[i])
   groupSolarSysteme.add(SolarSysteme[i].mesh)
 }
-BuildPositionPlanete(SolarSysteme)
-scene.add(groupSolarSysteme)
 buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
-camera.position.z = 100
-camera.position.x = 100
+scene.add(currentPlanete)
+create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
+camera.position.z = 50
 initLoop()
 
 // BUTTON PART
 /* Emit variable
 *  Make eventListener
 */
-const testSphere = new THREE.Mesh(
-  new THREE.SphereGeometry(10,64,32),
-  new THREE.ShaderMaterial({
-    vertexShader: vertexShader,
-    fragmentShader: fragmentShader
-  })
-)
-
-scene.add(testSphere)
 
 let previousButton = document.getElementById("before")
 let afterButton = document.getElementById("after")
