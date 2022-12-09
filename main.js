@@ -213,9 +213,6 @@ function buildText(element) {
 
   //Build description
 
-  const title = document.getElementById('titlePlanete')
-  title.innerText = element.name
-
   const description = document.getElementById('descriptionPlanete')
   description.innerText = element.description
 
@@ -325,6 +322,7 @@ currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
 scene.add(currentPlanete)
 create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 camera.position.z = 50
+camera.position.y += 2
 initLoop()
 
 // BUTTON PART
