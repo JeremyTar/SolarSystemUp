@@ -1,17 +1,10 @@
 import * as THREE from "three"
-import {
-  FontLoader
-} from "three/examples/jsm/loaders/FontLoader.js"
-import {
-  TextGeometry
-} from "three/examples/jsm/geometries/TextGeometry.js"
 
-import vertexShader from "./shaders/vertex.glsl";
-// import { fragmentShader } from "./shaders/fragment.glsl";
+// IMPORT SHADERS
 
 import SolarSysteme from "./Planete.js"
 
-console.log(vertexShader)
+console.log(SolarSysteme["Soleil"].maping.shaders)
 
 async function getInfo(url) {
   let json = await fetch(url)
@@ -61,7 +54,7 @@ function initLoop() {
 }
 
 function buildPlanete(element) {
-  const base = createPlanete(element.maping.base);
+  const base = createPlanete(element);
   if (element.maping.atmosphere) {
     const atmosphere = createAtmosphere(element.maping.atmosphere);
     base.add(atmosphere)
@@ -72,7 +65,8 @@ function buildPlanete(element) {
     base.bumpScale = 0.13
   }
   if (element.maping.ring) {
-    const ring = createRing(element.maping.ring.map)
+    console.log(element)
+    const ring = createRing(element.maping.ring.map, element.maping.ring.position.size)
     ring.rotation.x += element.maping.ring.position.x
     base.add(ring)
   }
@@ -106,6 +100,21 @@ function BuildPositionPlanete(allplanete) {
 function createPlanete(element) {
   return new THREE.Mesh(
     new THREE.SphereGeometry(10, 64, 32),
+    new THREE.ShaderMaterial({
+      vertexShader: element.maping.shaders.vertexPlanete,
+      fragmentShader: element.maping.shaders.fragmentPlanete,
+      uniforms: {
+        globeTexture: {
+          value: new THREE.TextureLoader().load(element.maping.base)
+        }
+      } 
+    })
+  );
+}
+
+function createShadersAtmosphere() {
+  return new THREE.Mesh(
+    new THREE.SphereGeometry(10, 64, 32),
     new THREE.MeshPhongMaterial({
       map: new THREE.TextureLoader().load(element),
       side: THREE.DoubleSide,
@@ -128,9 +137,10 @@ function createBump(element) {
   return new THREE.TextureLoader().load(element)
 }
 
-function createRing(element) {
+function createRing(element, size) {
+  console.log(size)
   const texture = new THREE.TextureLoader().load(element)
-  const ringGeometry = new THREE.RingGeometry(11, 12, 64);
+  const ringGeometry = new THREE.RingGeometry(size.begin, size.end, 64);
   const material = new THREE.MeshPhongMaterial({
     map: texture,
     transparent: false,
@@ -250,7 +260,6 @@ function buildText(element) {
       const thPlanet = document.createElement("th")
       thPlanet.innerText = i
       const tdPlanet = document.createElement("td")
-      // tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
       switch (i) {
         case "Température moyenne" :
           if(SolarSysteme[Object.keys(SolarSysteme)[index]].name == "Soleil") {
@@ -328,6 +337,15 @@ initLoop()
 /* Emit variable
 *  Make eventListener
 */
+const testSphere = new THREE.Mesh(
+  new THREE.SphereGeometry(10,64,32),
+  new THREE.ShaderMaterial({
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader
+  })
+)
+
+scene.add(testSphere)
 
 let previousButton = document.getElementById("before")
 let afterButton = document.getElementById("after")
