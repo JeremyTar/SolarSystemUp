@@ -5,7 +5,17 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 
 import SolarSysteme from "./Planete.js"
 
-console.log(SolarSysteme["Soleil"].maping.shaders)
+window.addEventListener('DOMContentLoaded', () => {
+  console.log("dom loaded")
+  const loader = document.getElementById("loader")
+  loader.style.transform = "translateY(2000px)"
+  setTimeout(() => {
+    loader.style.display = "none"
+  }, 5000)
+
+});
+
+
 
 async function getInfo(url) {
   let json = await fetch(url)
@@ -62,13 +72,11 @@ let myText
 // RENDER LOOP 
 
 function initLoop() {
-  // currentPlanete.rotation.y += 0.001
+  currentPlanete.rotation.y += 0.001
   renderer.setSize(size.width, size.height);
   renderer.render(scene, camera);
   Myloop = requestAnimationFrame(initLoop)
 }
-
-
 
 function buildPlanete(element) {
   const base = createPlanete(element);
@@ -84,7 +92,6 @@ function buildPlanete(element) {
     base.bumpScale = 0.13
   }
   if (element.maping.ring) {
-    console.log(element)
     const ring = createRing(element.maping.ring.map, element.maping.ring.position.size)
     ring.rotation.x += element.maping.ring.position.x
     base.add(ring)
@@ -153,7 +160,6 @@ function createBump(element) {
 }
 
 function createRing(element, size) {
-  console.log(size)
   const texture = new THREE.TextureLoader().load(element)
   const ringGeometry = new THREE.RingGeometry(size.begin, size.end, 64);
   const material = new THREE.MeshPhongMaterial({
@@ -182,7 +188,6 @@ function create3DText(element) {
       flatShading: true,
       map: new THREE.TextureLoader().load(element.maping.base)
     }))
-    console.log(center)
     textMesh.position.x -= center.x
     textMesh.position.y += 15
     myText = textMesh
@@ -218,7 +223,6 @@ function changePlanete(etat) {
   currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
   buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
   scene.remove(oldPlanete)
-  console.log(scene)
   scene.add(currentPlanete)
   scene.remove(myText)
   create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
@@ -314,8 +318,6 @@ function buildText(element) {
 *   run initloop
 */
 
-
-
 const size = {
   width: window.innerWidth,
   height: window.innerHeight
@@ -346,21 +348,7 @@ for (const i in SolarSysteme) {
   groupSolarSysteme.add(SolarSysteme[i].mesh)
 }
 buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
-currentPlanete = new THREE.Mesh(
-  new THREE.SphereGeometry(10, 64, 32, 2.4 ,4),
-  new THREE.MeshPhongMaterial({color: 0xffff00, wireframe: true})
-)
-const disque = new THREE.Mesh(
-  new THREE.CircleGeometry(10,32),
-  new THREE.MeshPhongMaterial({color: 0x2596be})
-)
-scene.add(disque)
-const inside1 = new THREE.Mesh(
-  new THREE.SphereGeometry(5,64,32),
-  new THREE.MeshPhongMaterial({color: 0xffff00})
-)
-scene.add(inside1)
-// SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
+currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
 scene.add(currentPlanete)
 create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 camera.position.z = 50
@@ -397,15 +385,6 @@ elementButtonClose.addEventListener('click', () => {
   }
   tableau.style.display = 'none'
 })
-
-let insideButton = document.getElementById("seeInside")
-insideButton.addEventListener('click', open)
-
-function open() {
-  cancelAnimationFrame(Myloop)
-  console.log(currentPlanete)
-  console.log(currentPlanete.mesh.phiLength)
-}
 
 // RESPONSIVE THREE
 
