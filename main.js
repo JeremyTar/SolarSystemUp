@@ -12,6 +12,8 @@ async function getInfo(url) {
   return await json.json()
 }
 
+// GET INFORMATIONS FOR COMPLET OUR CLASS
+
 let callAPI = await getInfo("https://api.le-systeme-solaire.net/rest/bodies?filter[]=isPlanet,eq,true")
 callAPI.bodies.forEach(element => {
   for (const i in SolarSysteme) {
@@ -36,10 +38,19 @@ callAPI.bodies.forEach(element => {
   }
 })
 
-// THREE PART
-/* Emit variable
-*  Emit Function
-*  Emit scene
+// INDEX VARIABLES + FUNCTION
+/*
+*   initLoop()
+*   buildPlanete(element); element = class Planete
+*   BuildPositionPlanete(allplanete) / (not use) Display planete at 380 deg ; allplanete = SolarSysteme
+*   createPlanete(element)
+*   createShadersAtmosphere(element)
+*   createAtmosphere(element)
+*   createBump(element) / (not working)
+*   createRing(element, size) 
+*   create3DText(element)
+*   changePlanete(etat) / mouv index
+*   buildText(element) / remove and generate text in panel
 */
 
 let index = 3
@@ -48,12 +59,16 @@ let oldPlanete
 let currentPlanete
 let myText
 
+// RENDER LOOP 
+
 function initLoop() {
   currentPlanete.rotation.y += 0.001
   renderer.setSize(size.width, size.height);
   renderer.render(scene, camera);
   Myloop = requestAnimationFrame(initLoop)
 }
+
+
 
 function buildPlanete(element) {
   const base = createPlanete(element);
@@ -288,6 +303,19 @@ function buildText(element) {
 }
 
 // inti Scene //
+/*
+*   sizing
+*   scene
+*   camera
+*   renderer
+*   light
+*   build planete and put un array
+*   build text
+*   run initloop
+*/
+
+
+
 const size = {
   width: window.innerWidth,
   height: window.innerHeight
@@ -307,9 +335,9 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true,
 });
 
-const ambientLight = new THREE.AmbientLight(0x404040, 3.5, 1000);
-const PointLight = new THREE.PointLight(0xffffff, 1, 300)
-PointLight.position.set(0, 10, 0)
+const ambientLight = new THREE.AmbientLight(0x404040, 3.5, 50);
+const PointLight = new THREE.PointLight(0xffffff, 1, 50)
+PointLight.position.set(0, 50, 0)
 scene.add(ambientLight, PointLight);
 
 const groupSolarSysteme = new THREE.Group()
@@ -324,6 +352,7 @@ create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 camera.position.z = 50
 camera.position.y += 2
 initLoop()
+
 
 // BUTTON PART
 /* Emit variable

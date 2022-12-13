@@ -20,10 +20,23 @@ h1,h2,h3 {
   color: white;
   text-align: center;
 }
+h1 {
+  margin: 0;
+  padding: 10px 25px 0 25px ;
+}
+
+a {
+  font-family: 'calculator';
+  font-size: 1.6em;
+  color: white;
+  transition: 2s;
+  text-shadow: 0 1px 50px 1px rgba(5,44,74,0.6);
+}
 
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 ul {
@@ -45,12 +58,36 @@ canvas {
 }
 
 #navButton {
-  width: 80%;
+  width: 150px;
   margin: auto;
   display: flex;
   justify-content: space-evenly;
-  background-color: green;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+
 }
+#before {
+  transform: rotate(180deg);
+}
+ #navButton img {
+  width: 100px;
+ }
+ #navButton button {
+  background-color: rgba(5,44,74,0.6);
+  border-radius: 25px;
+  border: 2px double rgba(255,255,255,0.5);
+  box-shadow: 0px 0px 50px 3px rgba(255,255,255,0.3);
+  transition: 0.2s
+ }
+
+ #navButton button:hover {
+
+  box-shadow: 0px 0px 50px 10px rgba(225,255,255,0.3);
+  border: 2px double rgba(255,255,255,1);
+ }
+
 
 .Panel {
   position: absolute;
@@ -63,9 +100,16 @@ canvas {
   color: white;
   top: 10%;
   bottom: 10%;
-  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5px;
 }
-
+#descriptionPlanete {
+  text-align: justify;
+  padding: 0 10px 0 10px;
+}
 #informations {
   position: absolute;
   z-index: 10;
@@ -78,6 +122,11 @@ canvas {
   top: 10%;
   bottom: 10%;
   right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5px;
 }
 
 #credits {
@@ -93,10 +142,21 @@ table, td ,tr ,th{
   padding: 5px;
   width: 250px;
 }
+table {
+  box-shadow: 0px 0px 50px 10px rgba(225,255,255,0.2);
+  border-radius: 0 0 25px 25px;
+  padding: 15px;
+  backdrop-filter: blur(5px);
+}
 caption {
   font-family: "calculator";
   font-size: 1.5em;
-  border: 1.5px solid cyan;
+  border: 1.5px solid white; 
+  background-color: rgba(255, 255, 255,0.2);
+  box-shadow: 0px 0px 50px 10px rgba(225,255,255,0.2);
+  border-radius: 25px 25px 0 0;
+  padding: 10px;
+  backdrop-filter: blur(5px);
 }
 
 .informationsPlanete {
@@ -136,3 +196,21 @@ caption {
   margin: 5px;
   border: none;
 }
+
+ #openPeriodique img {
+  width: 150px;
+ }
+
+ #openPeriodique{
+  background-color: rgba(5,44,74,0.6);
+  border-radius: 25px;
+  border: 2px double rgba(255,255,255,0.5);
+  box-shadow: 0px 0px 50px 3px rgba(255,255,255,0.3);
+  transition: 0.2s;
+  padding: 15px;
+ }
+
+ #openPeriodique:hover {
+  box-shadow: 0px 0px 50px 10px rgba(225,255,255,0.3);
+  border: 2px double rgba(255,255,255,1);
+ }

@@ -3,11 +3,9 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://kit.fontawesome.com/348d9b1434.js" crossorigin="anonymous"></script>
-  <title>Vite App</title>
+  <title>SolarSysteme</title>
 </head>
 
 <body>
@@ -15,44 +13,40 @@
     <header>
       <h1>My Solar Systeme</h1>
       <div clas="tools">
-        <button id="openPeriodique">Tableau</button>
-      </div>      
+      </div>
     </header>
-    <main> 
-        <section id="main" class="Panel">
-          <div id="section-head" class="flex justify-between items-center text-2xl mb-3">
-          </div>
-            <p id= descriptionPlanete class="leading-8"></p>
-            <div id="navButton">
-              <button id="before"><i class="fa-solid fa-arrow-left"></i>Next</button>
-              <button id="after"><i class="fa-solid fa-arrow-right"></i>Previous</button>
-            </div>   
-          </section>
-          <section id="informations">
-            <div class="informationsPlanete">
-              <div>
-                <table>
-                  <caption>Composition atmosphérique</caption>
-                  <tbody id="tableAtmos">
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <table>
-                    <caption>Caractéristique de la planete</caption>
-                    <tbody id="tablePlanet">
-                    </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-          <p id="credits">Design by <a href="#">Ludovic Biolon</a> and mount by <a href="#">Jeremy Tardini</a></p>   
+    <main>
+      <section id="main" class="Panel">
+        <div id="section-head" class="flex justify-between items-center text-2xl mb-3">
+        </div>
+        <p id="descriptionPlanete" class="leading-8"></p>
+        <table>
+          <caption>Caractéristique de la planete</caption>
+          <tbody id="tablePlanet">
+          </tbody>
+        </table>
+        <div id="navButton">
+          <button id="before"><img src="./assets/Arrow_transparent.png" alt="fléche pour voir la prochaine planéte"></button>
+          <button id="after"><img src="./assets/Arrow_transparent.png" alt="fléche pour voir la précedente planéte"></button>
+        </div>
+      </section>
+      <section id="informations">
+        <div class="informationsPlanete">
+          <table>
+            <caption>Composition atmosphérique</caption>
+            <tbody id="tableAtmos">
+            </tbody>
+          </table>
+        </div>
+        <button id="openPeriodique"><img src="./assets/element_icone.png" alt="Button pour ouvrir le tableau périodique"></button>
+      </section>
+      <p id="credits">Design by <a href="https://www.linkedin.com/in/ludoboilon/?originalSubdomain=fr">Ludovic Biolon</a> and mount by <a href="https://github.com/JeremyTar">Jeremy Tardini</a></p>
     </main>
     <canvas id="three"></canvas>
     <div id="periodique">
       <div class="containt">
         <img src="./assets/Periodique.png" alt="tableau périodique des Elements">
-        <button id="closePeriodique">X</button>        
+        <button id="closePeriodique">X</button>
       </div>
     </div>
   </div>
