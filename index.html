@@ -15,7 +15,6 @@
     <header>
       <h1>My Solar Systeme</h1>
       <div clas="tools">
-        <button id="openPeriodique">Tableau</button>
       </div>      
     </header>
     <main> 
@@ -23,8 +22,16 @@
           <div id="section-head" class="flex justify-between items-center text-2xl mb-3">
           </div>
             <p id= descriptionPlanete class="leading-8"></p>
+            <div>
+              <table>
+                  <caption>Caractéristique de la planete</caption>
+                  <tbody id="tablePlanet">
+                  </tbody>
+              </table>
+            </div>
             <div id="navButton">
               <button id="before"><i class="fa-solid fa-arrow-left"></i>Next</button>
+              <button id="seeInside">Voir interrieur</button>
               <button id="after"><i class="fa-solid fa-arrow-right"></i>Previous</button>
             </div>   
           </section>
@@ -37,13 +44,7 @@
                   </tbody>
                 </table>
               </div>
-              <div>
-                <table>
-                    <caption>Caractéristique de la planete</caption>
-                    <tbody id="tablePlanet">
-                    </tbody>
-                </table>
-              </div>
+              <button id="openPeriodique">Tableau périodique</button>
             </div>
           </section>
           <p id="credits">Design by <a href="#">Ludovic Biolon</a> and mount by <a href="#">Jeremy Tardini</a></p>   
