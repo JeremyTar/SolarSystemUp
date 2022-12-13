@@ -62,7 +62,7 @@ let myText
 // RENDER LOOP 
 
 function initLoop() {
-  currentPlanete.rotation.y += 0.001
+  // currentPlanete.rotation.y += 0.001
   renderer.setSize(size.width, size.height);
   renderer.render(scene, camera);
   Myloop = requestAnimationFrame(initLoop)
@@ -346,7 +346,21 @@ for (const i in SolarSysteme) {
   groupSolarSysteme.add(SolarSysteme[i].mesh)
 }
 buildText(SolarSysteme[Object.keys(SolarSysteme)[index]])
-currentPlanete = SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
+currentPlanete = new THREE.Mesh(
+  new THREE.SphereGeometry(10, 64, 32, 2.4 ,4),
+  new THREE.MeshPhongMaterial({color: 0xffff00, wireframe: true})
+)
+const disque = new THREE.Mesh(
+  new THREE.CircleGeometry(10,32),
+  new THREE.MeshPhongMaterial({color: 0x2596be})
+)
+scene.add(disque)
+const inside1 = new THREE.Mesh(
+  new THREE.SphereGeometry(5,64,32),
+  new THREE.MeshPhongMaterial({color: 0xffff00})
+)
+scene.add(inside1)
+// SolarSysteme[Object.keys(SolarSysteme)[index]].mesh
 scene.add(currentPlanete)
 create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 camera.position.z = 50
@@ -384,6 +398,14 @@ elementButtonClose.addEventListener('click', () => {
   tableau.style.display = 'none'
 })
 
+let insideButton = document.getElementById("seeInside")
+insideButton.addEventListener('click', open)
+
+function open() {
+  cancelAnimationFrame(Myloop)
+  console.log(currentPlanete)
+  console.log(currentPlanete.mesh.phiLength)
+}
 
 // RESPONSIVE THREE
 
