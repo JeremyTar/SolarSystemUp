@@ -31,7 +31,7 @@ a {
   font-size: 1.6em;
   color: white;
   transition: 2s;
-  text-shadow: 0 1px 50px 1px rgba(5,44,74,0.6);
+  text-shadow: 0 1px 50px rgba(5,44,74,0.6);
 }
 
 header {
@@ -240,7 +240,7 @@ thead th {
   transition: 3s;
 }
 body #loader .systeme {
-  margin: auto;
+  margin: auto; 
   width: 300px;
   height: 300px;
   position: relative;
