@@ -197,7 +197,6 @@ function create3DText(element) {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded')
   }, (err) => {
     console.log(err)
-    return
   })
 
 }
@@ -228,15 +227,7 @@ function changePlanete(etat) {
   create3DText(SolarSysteme[Object.keys(SolarSysteme)[index]])
 }
 
-function buildText(element) {
-
-  //Build description
-
-  const description = document.getElementById('descriptionPlanete')
-  description.innerText = element.description
-
-  // Build table atmosphere
-
+function buildTableAtmos() {
   let table = document.getElementById("tableAtmos")
   let child = table.lastElementChild; 
   while (child) {
@@ -257,9 +248,9 @@ function buildText(element) {
     tr.appendChild(td)
     table.appendChild(tr)
   }
+}
 
-  // Build table Caratéristique
-
+function  buildTableCaracteristique() {
   let tablePlanet = document.getElementById("tablePlanet")
   let childPlanet = tablePlanet.lastElementChild; 
   while (childPlanet) {
@@ -304,6 +295,15 @@ function buildText(element) {
       trPlanet.appendChild(tdPlanet)
       tablePlanet.appendChild(trPlanet)
   }
+}
+
+function buildText(element) {
+
+  //Build description
+  const description = document.getElementById('descriptionPlanete')
+  description.innerText = element.description
+  buildTableAtmos()
+  buildTableCaracteristique()
 }
 
 // inti Scene //
