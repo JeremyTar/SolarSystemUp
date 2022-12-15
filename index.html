@@ -29,9 +29,12 @@
         <div id="section-head" class="flex justify-between items-center text-2xl mb-3">
         </div>
         <p id="descriptionPlanete" class="leading-8"></p>
-        <table>
-          <thead></thead>
-          <caption>Caractéristique de la planete</caption>
+        <table aria-describedby="captionPlanet">
+          <caption id="captionPlanet">Caracteristique de la planete</caption>
+          <thead>
+            <th>Caracteristique</th>
+            <th>Valeurs</th>
+          </thead>
           <tbody id="tablePlanet">
           </tbody>
         </table>
@@ -42,9 +45,12 @@
       </section>
       <section id="informations">
         <div class="informationsPlanete">
-          <table>
-            <thead></thead>
-            <caption>Composition atmosphérique</caption>
+          <table aria-describedby="captionAtmos">
+            <thead>
+              <th>Molecule</th>
+              <th>Pourcentage</th>
+            </thead>
+            <caption id="captionAtmos">Composition atmosphérique</caption>
             <tbody id="tableAtmos">
             </tbody>
           </table>
