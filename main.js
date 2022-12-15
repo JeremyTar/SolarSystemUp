@@ -29,7 +29,7 @@ callAPI.bodies.forEach(element => {
   for (const i in SolarSysteme) {
     if(SolarSysteme[i].name == "Soleil") {
       let caracteristique = {
-        "Température moyenne": 5500,
+        "Température moyenne": 5500.000000001,
         "Rotation Orbitale": "225 Millions d'années", 
         "Période de rotation": "?",
         "Diamètre": "1,3927 million"
@@ -250,6 +250,7 @@ function buildTableAtmos() {
   }
 }
 
+
 function  buildTableCaracteristique() {
   let tablePlanet = document.getElementById("tablePlanet")
   let childPlanet = tablePlanet.lastElementChild; 
@@ -264,15 +265,11 @@ function  buildTableCaracteristique() {
       const tdPlanet = document.createElement("td")
       switch (i) {
         case "Température moyenne" :
-          if(SolarSysteme[Object.keys(SolarSysteme)[index]].name == "Soleil") {
-            tdPlanet.innerText = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i] + " °C"
-          } else {
-            let temp = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
-            let tempSplit = temp.toString().split(".")
-            let decimal = tempSplit[1].split("")
-            let finalTemp = tempSplit[0] + "." + decimal[0] + decimal[1]
-            tdPlanet.innerText = finalTemp + "°C"
-          }
+          let temp = SolarSysteme[Object.keys(SolarSysteme)[index]].caracteristique[i]
+          let tempSplit = temp.toString().split(".")
+          let decimal = tempSplit[1].split("")
+          let finalTemp = tempSplit[0] + "." + decimal[0] + decimal[1]
+          tdPlanet.innerText = finalTemp + "°C"
           break
         case "Rotation Orbitale" :
           if(SolarSysteme[Object.keys(SolarSysteme)[index]].name == "Soleil") {
@@ -298,7 +295,6 @@ function  buildTableCaracteristique() {
 }
 
 function buildText(element) {
-
   //Build description
   const description = document.getElementById('descriptionPlanete')
   description.innerText = element.description
