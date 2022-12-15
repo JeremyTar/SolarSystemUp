@@ -144,7 +144,10 @@ table {
   border-radius: 0 0 25px 25px;
   padding: 15px;
   backdrop-filter: blur(5px);
+  width: 95%;
+  max-width: 500px;
 }
+
 caption {
   font-family: "calculator", Arial, sans-serif;
   font-size: 1.5em;
