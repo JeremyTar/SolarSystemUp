@@ -10,13 +10,13 @@
 
 
 p,span,ul {
-  font-family: "caviar", Arial;
+  font-family: "caviar", Arial, sans-serif;
   font-size: 1.2em;
 }
 
 h1,h2,h3 {
   font-size: 2.5em;
-  font-family: "calculator", Arial;
+  font-family: "calculator", Arial, sans-serif;
   color: white;
   text-align: center;
   margin: 0;
@@ -27,7 +27,7 @@ h1 {
 }
 
 a {
-  font-family: 'calculator', Arial;
+  font-family: 'calculator', Arial, sans-serif;
   font-size: 1.6em;
   color: white;
   transition: 2s;
@@ -59,13 +59,9 @@ canvas {
 }
 
 #navButton {
-  width: 150px;
-  margin: auto;
   display: flex;
   justify-content: space-evenly;
   margin: 0;
-  display: flex;
-  justify-content: space-evenly;
   width: 80%;
 
 }
@@ -138,7 +134,7 @@ canvas {
 }
 
 table, td ,tr ,th{
-  font-family: "caviar", Arial;
+  font-family: "caviar", Arial, sans-serif;
   border: 1px solid;
   padding: 5px;
   width: 250px;
@@ -150,7 +146,7 @@ table {
   backdrop-filter: blur(5px);
 }
 caption {
-  font-family: "calculator", Arial;
+  font-family: "calculator", Arial, sans-serif;
   font-size: 1.5em;
   border: 1.5px solid white; 
   background-color: rgba(255, 255, 255,0.2);
